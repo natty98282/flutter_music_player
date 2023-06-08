@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_music_app/models/song_model.dart';
+import 'package:flutter_music_app/widgets/seekbar.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:rxdart/rxdart.dart' as rxdart;
 
 class SongScreen extends StatefulWidget {
   const SongScreen({super.key});
@@ -35,6 +37,11 @@ class _SongScreenState extends State<SongScreen> {
       audioplayer.dispose();
       super.dispose();
     }
+
+    Stream<SeekBarData> get _seekBarDataStream =>
+    rxdart.Rx.combineLatest2<Duration, Duration?, SeekBarData>(
+      audioplayer.post
+    )
 
     return Scaffold(
       appBar: AppBar(
